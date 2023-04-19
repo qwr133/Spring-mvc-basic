@@ -5,8 +5,7 @@ package com.spring.mvc.chap01;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -55,14 +54,47 @@ public class ControllerV1 {
             String stu, //아무런 추가사항이 없으면 Request Param 생략가능
             @RequestParam ("major") String mj,
             @RequestParam (defaultValue = "1") int grade //기본값을 1로 설정하는 옵션임
-    ){
-        System.out.println(" stu = "+ stu);
-        System.out.println(" major = "+ mj);
-        System.out.println(" grade = "+ grade);
-
+    ) {
+        System.out.println(" stu = " + stu);
+        System.out.println(" major = " + mj);
+        System.out.println(" grade = " + grade);
 
         return "";
 
-
     }
+
+    //==3. 커맨드 객체 이용하기 (ex, 게시판 글쓰기)
+    //== 쿼리 스트링의 양이 너무 많을 경우 또는 연관성이 있을 경우
+    //==> ex) /spring/order?oNum=20230419007-P&goods=구두&amount=3&price=500000....
+
+        @RequestMapping("/order")
+        public String order (OrderRequestDTO dto){
+            System.out.println("dto = " + dto);
+            return "";
+    }
+
+    //==4. url에 경로로 붙어있는 데이터 읽기
+    //==> /spring/member/hong/107
+    //     hong이라는 유저의 107번 게시글을 읽고싶음
+    @RequestMapping("/member/{userName}/{bNo}")
+    public String member(
+            @PathVariable String userName, //@PathVariable { } 괄호 뒤에 부분을 읽어줌
+            @PathVariable long bNo
+    ){
+        System.out.println("userName = " + userName);
+        System.out.println("bNo = " + bNo);
+        return "";
+    }
+
+
+
+    //음식선택요청처리 - food.jsp
+    @PostMapping("/food-select") //아래 리쿼스트맵핑이랑 같은 내용 = post 방식으로만 받고싶다!!!
+//    @RequestMapping(value = "/food-select", method =  RequestMethod.POST)
+    public String foodSelect(String foodName, String category){
+        System.out.println("foodname = " + foodName);
+        System.out.println("category = " + category);
+        return "";
+    }
+
 }
