@@ -76,6 +76,7 @@ public class ScoreRepositoryImpl implements ScoreRepository {
         return true;
     }
 
+    //이 학번(=너가 지우고싶은 이 학번)이 map에 키값이 존재하지 않는다면 return false
     @Override
     public boolean deleteByStuNum(int stuNum) {
         if (!scoreMap.containsKey(stuNum)) return false;

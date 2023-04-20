@@ -40,6 +40,7 @@ public class ScoreController {
     private final ScoreRepository repository; //data가 변하지 않기 위해 final -- 객체 불변성 유지가능
 
     // @Autowired //spring이 저장소 객체를 주입  데이터 저장소 바뀌어도 컨트롤러 코드가 바뀔 일이 없음(OCP)
+
     //Autowired를 생략해도 돌아감 왜? -- 자동 autowired의 조건이 해당되기 때문
     // 자동 autowired란? 클래스의 생성자가 단 1개라면 자동으로 @autowired를 써줌
     // 여러개인 경우 해당 클래스에 하나씩 @autowired를 붙여줘야함
@@ -48,7 +49,8 @@ public class ScoreController {
 //    }
 
     //@RequestParam = num 부분 안넣으면 sort 부분이 null 값이 나옴 그래서 기본값을 입력하기 위함
-    //성적등록화면 띄우기 + 정보목록조회
+
+    //1. 성적등록화면 띄우기 + 정보목록조회
     @GetMapping("/list")
     public String list(Model model, @RequestParam(defaultValue = "num") String sort) {
         System.out.println("/score/list : GET!");
@@ -69,16 +71,17 @@ public class ScoreController {
 
         //dto(ScoreDTO)를 entity(Score)로 변환해야함
         Score score = new Score(dto); //score에 생성자 만듬
+        //여기 Score가 Score class line 22번줄 여기 score에 dto 값이 있으니까 값을 가져와서 save 저장
 
 
-        //save
+        //save 저장하기
         repository.save(score);
 
         /*
             등록요청에서 jsp 뷰 포워딩을 하면 갱신된 목록을 다시한번
             저장소에서 불러와 모델에 담는 추가적인 코드가 필요하지만
 
-            리다이ㅔㄺ트를 통해서 위에서 만든 /score/List: GET
+            리다이렉트를 통해서 위에서 만든 /score/List: GET
             을 자동으로 다시 보낼 수 있다면 번거로운 코드가 줄어들 수 있겠다.
          */
 
@@ -97,13 +100,14 @@ public class ScoreController {
 
     //4, 성적정보 상세조회 요청
     @GetMapping("/detail")
+    //                  (클라이언트에게 받는 정보 변수 입력)
     public String detail(int stuNum, Model model) {
         System.out.println("/score/detail : get");
         System.out.println(stuNum);
-
+    // 저장소에 연락해서 학번 줄테니까 성적정보(byStuNum) 갖고와!
         Score byStuNum = repository.findByStuNum(stuNum);
         model.addAttribute("sName", byStuNum);
-
+    //결과화면은 return값에 보내기 -- jsp로 보내기 위해서 model을 가지고 add 하면됨
         return "chap04/score-detail";
     }
 
