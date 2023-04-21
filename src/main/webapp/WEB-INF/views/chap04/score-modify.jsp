@@ -69,6 +69,8 @@
                 </ul>
                 <div class="btn-group">
                     <button type="submit">수정완료</button>
+                    <button type="button" onclick="history.back()">이전으로</button> 
+                    <!-- onclick= "history.back()" ==> 뒤로가기 -->
                 </div>
             </form>
         </section>

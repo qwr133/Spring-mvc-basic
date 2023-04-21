@@ -27,13 +27,10 @@ public class Score {
 
         calcTotalAndAvg(); //총점, 평균 계산 ctrl+alt+m
         calcGrade(); //학점계산
-
     }
 
-    private void calcTotalAndAvg() {
-        this.total = kor + eng + math;
-        this.average = total / 3.0;
-    }
+    //리펙토링 changeScore부분 추가하기
+
 
     private void calcGrade() {
         if (average >= 90) {
@@ -49,6 +46,10 @@ public class Score {
         }
 
 
+    }
+    private void calcTotalAndAvg() {
+        this.total = kor + eng + math;
+        this.average = total / 3.0;
     }
 
 

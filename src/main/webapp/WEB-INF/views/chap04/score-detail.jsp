@@ -31,7 +31,8 @@
 
     <div class="btn-group">
         <a class="list-btn" href="/score/list">목록</a>
-        <a class="list-btn" href="/score/modify">수정</a>
+        <!-- 해당되는 stuNum에 대한 수정화면 띄어줘!! get으로 받아야함(조회니까) -->
+        <a class="list-btn" href="/score/modify?stuNum=${sName.stuNum}">수정</a>
     </div>
 
     </div>
