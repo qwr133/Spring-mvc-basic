@@ -27,7 +27,7 @@ public class ScoreService {
     /*
         컨트롤러는 데이터 베이스를 통해 성적정보 리스트를 가져오길 원한다.
         근데 데이터 베이스는 성적정보를 전부 모아서 준다
-        컨트롤러는 일부만 받길 원한다.
+        컨트롤러는 일부만 받길 원한다. => service가 중간에서 모두 처리하게끔 해줌
 
      */
     public List<ScoreListResponseDTO> getList(String sort) {

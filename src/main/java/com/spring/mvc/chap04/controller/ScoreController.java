@@ -1,4 +1,4 @@
-package com.spring.mvc.chap04.entity.controller;
+package com.spring.mvc.chap04.controller;
 
 import com.spring.mvc.chap04.dto.ScoreListResponseDTO;
 import com.spring.mvc.chap04.dto.ScoreRequestDTO;
@@ -80,7 +80,7 @@ public class ScoreController {
 //            responseDTOList.add(dto);
 //        }
 
-        model.addAttribute("sList", responseDTOList); //추가확인팔요
+        model.addAttribute("sList", responseDTOList);
 
         return "chap04/score-list";
     }
