@@ -10,7 +10,7 @@ import java.util.Map;
 import static java.util.Comparator.comparing;
 import static java.util.stream.Collectors.toList;
 
-@Repository
+@Repository //boardRepository 서비스를 주입받을 수 있음
 public class BoardRepositoryImpl implements BoardRepository {
 
     private final static Map<Integer, Board> boardMap;
@@ -30,7 +30,7 @@ public class BoardRepositoryImpl implements BoardRepository {
     public List<Board> findAll() {
         return boardMap.values()
                 .stream()
-                .sorted(comparing(Board::getBoardNo).reversed())
+                .sorted(comparing(Board::getBoardNo).reversed()) //(글 번호 정렬).내림차 순으로
                 .collect(toList())
                 ;
     }

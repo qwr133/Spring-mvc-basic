@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
-@Controller
-@RequiredArgsConstructor
+@Controller //디스패처 서블릿 주입
+@RequiredArgsConstructor //의존성 주입
 @RequestMapping("/board")
 public class BoardController {
 

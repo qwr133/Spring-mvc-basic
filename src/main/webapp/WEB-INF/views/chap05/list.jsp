@@ -33,7 +33,8 @@
 
         <div class="card-container">
 
-            <c:forEach var="b" items="${bList}">
+            <!-- boardController 목록조회 부분  var="b"는 DTO(not Board), bList는 ResponseDTO(5개 변수) ==> 타입을 잘 알아둬야함 -->
+            <c:forEach var="b" items="${bList}"> 
                 <div class="card-wrapper">
                     <section class="card" data-bno="${b.boardNo}">
                         <div class="card-title-wrapper">
