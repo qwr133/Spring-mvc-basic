@@ -59,7 +59,7 @@ public class BoardController {
 
     //게시물 등록 - 게시물 정보 통채로 필요함
     @GetMapping("/detail")
-    public String detail(int bno, Model model) {
+    public String detail(int bno, Model model) { //글번호 내놔봐, model에 넣기
         System.out.println("/board/detail : GET");
         model.addAttribute("b", boardService.getDetail(bno));
         return "chap05/detail";

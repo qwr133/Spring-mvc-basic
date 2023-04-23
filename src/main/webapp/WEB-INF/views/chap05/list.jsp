@@ -56,6 +56,7 @@
                         </div>
                     </section>
                     <div class="card-btn-group">
+                        <!-- href태그는 a 태그 속성, 커스텀속성으로 data-href 태그를 만듦 -->
                         <button class="del-btn" data-href="/board/delete?bno=${b.boardNo}">
                             <i class="fas fa-times"></i>
                         </button>
