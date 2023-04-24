@@ -14,17 +14,17 @@ import java.util.stream.Collectors;
 import static java.util.stream.Collectors.*;
 
 @Service
-@RequiredArgsConstructor
+@RequiredArgsConstructor //서비스 주입을 위해서 롬복으로 생성자 주입
 public class BoardService {
 
     private final BoardRepository boardRepository;
-
+    //레파짓토리에 의존하고 레파짓토리의 역할에 의존하기
 
 
     // 중간처리 기능 자유롭게 사용
     // 목록 중간처리
     public List<BoardListResponseDTO> getList() {
-
+    //람다식을 기본 문법 코드로 보고싶을 때 alt+enter - 스트림 API체인을 루프로 바꾸기 엔터
         return boardRepository.findAll()
                 .stream()
                 .map(BoardListResponseDTO::new)

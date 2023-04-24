@@ -33,7 +33,8 @@
 
         <div class="card-container">
 
-            <c:forEach var="b" items="${bList}">
+            <!-- boardController 목록조회 부분  var="b"는 DTO(not Board), bList는 ResponseDTO(5개 변수) ==> 타입을 잘 알아둬야함 -->
+            <c:forEach var="b" items="${bList}"> 
                 <div class="card-wrapper">
                     <section class="card" data-bno="${b.boardNo}">
                         <div class="card-title-wrapper">
@@ -55,6 +56,7 @@
                         </div>
                     </section>
                     <div class="card-btn-group">
+                        <!-- href태그는 a 태그 속성, 커스텀속성으로 data-href 태그를 만듦 -->
                         <button class="del-btn" data-href="/board/delete?bno=${b.boardNo}">
                             <i class="fas fa-times"></i>
                         </button>

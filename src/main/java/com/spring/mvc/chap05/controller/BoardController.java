@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
-@Controller
-@RequiredArgsConstructor
+@Controller //디스패처 서블릿 주입
+@RequiredArgsConstructor //의존성 주입
 @RequestMapping("/board")
 public class BoardController {
 
@@ -59,7 +59,7 @@ public class BoardController {
 
     //게시물 등록 - 게시물 정보 통채로 필요함
     @GetMapping("/detail")
-    public String detail(int bno, Model model) {
+    public String detail(int bno, Model model) { //글번호 내놔봐, model에 넣기
         System.out.println("/board/detail : GET");
         model.addAttribute("b", boardService.getDetail(bno));
         return "chap05/detail";
