@@ -48,9 +48,6 @@ public class BoardRepositoryImpl implements BoardRepository {
         return true;
     }
 
-
-
-
     @Override
     public Board findOne(int boardNo) {
         return boardMap.get(boardNo);
