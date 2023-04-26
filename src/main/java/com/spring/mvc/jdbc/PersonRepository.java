@@ -179,7 +179,10 @@ public class PersonRepository {
                 String name = rs.getString("person_name");
                 int age = rs.getInt("person_age");
 
-                Person p = new Person(id, name, age);
+                Person p = new Person();
+                p.setId(id);
+                p.setPersonName(name);
+                p.setPersonAge(age);
                 people.add(p);
             }
 

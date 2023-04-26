@@ -20,6 +20,7 @@ public class DatabaseConfig {
     //커넥션 풀 설정
     // db 접속시 사용하는 리소스를 관리하는 프로그램
 
+    //spring boot 사용하지 않으면 이 부분 설정해야함
 //    @Bean
 //    public DataSource dataSource(){
 //        //히카리 설정

@@ -42,7 +42,7 @@ import java.util.stream.Collectors;
 public class ScoreController {
 
     //저장소에 의존해 데이터를 받아서 클라이언트에게 응답할 수 있음
-    private final ScoreRepository repository; //data가 변하지 않기 위해 final -- 객체 불변성 유지가능
+//    private final ScoreRepository repository; //data가 변하지 않기 위해 final -- 객체 불변성 유지가능
     private final ScoreService scoreService;
 
     // @Autowired //spring이 저장소 객체를 주입  데이터 저장소 바뀌어도 컨트롤러 코드가 바뀔 일이 없음(OCP)
@@ -164,7 +164,7 @@ public class ScoreController {
     }
 
     private void retrieve(int stuNum, Model model) {
-        Score modifyNum = repository.findByStuNum(stuNum);
+        Score modifyNum = scoreService.retrieve(stuNum);
         model.addAttribute("s", modifyNum);
     }
 
