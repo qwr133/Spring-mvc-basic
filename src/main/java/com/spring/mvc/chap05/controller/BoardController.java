@@ -66,6 +66,18 @@ public class BoardController {
     }
 
 
+
+
+
+
+    //게시글 수정
+    @PostMapping("/modify")
+    public String modify(BoardWriteRequestDTO dto){
+        System.out.println("/board/modify : POST");
+        boardService.modify(dto);
+        return "redirect:/board/list";
+    }
+
 }
 
 

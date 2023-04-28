@@ -98,11 +98,17 @@
         button.list-btn {
             background: #e61e8c;
         }
+        button.list-btn:last-child {
+            background: #3d8b40;
+        }
         button:hover {
             background-color: #3d8b40;
         }
         button.list-btn:hover {
-            background: #e61e8c93;
+            background: #3d8b40;
+        }
+        button.list-btn:last-child:hover {
+            background: #e61e8c;
         }
     </style>
 </head>
@@ -116,6 +122,7 @@
         <div id="content">${b.content}</div>
         <div class="buttons">
             <button class="list-btn" type="button" onclick="window.location.href='/board/list'">목록</button>
+            <button class="list-btn" type="button" onclick="window.location.href='/board/rewrite'">수정</button>
         </div>
         
     </div>

@@ -4,12 +4,11 @@ import com.spring.mvc.chap05.dto.BoardDetailResponseDTO;
 import com.spring.mvc.chap05.dto.BoardListResponseDTO;
 import com.spring.mvc.chap05.dto.BoardWriteRequestDTO;
 import com.spring.mvc.chap05.entity.Board;
-import com.spring.mvc.chap05.repository.BoardRepository;
+import com.spring.mvc.chap05.repository.BoardMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.*;
 
@@ -17,8 +16,9 @@ import static java.util.stream.Collectors.*;
 @RequiredArgsConstructor //서비스 주입을 위해서 롬복으로 생성자 주입
 public class BoardService {
 
-    private final BoardRepository boardRepository;
+//    private final BoardRepository boardRepository;
     //레파짓토리에 의존하고 레파짓토리의 역할에 의존하기
+    private final BoardMapper boardRepository;
 
 
     // 중간처리 기능 자유롭게 사용
@@ -34,7 +34,7 @@ public class BoardService {
 
     // 글 등록 중간처리
     public boolean register(BoardWriteRequestDTO dto) {
-        return boardRepository.save(new Board());
+        return boardRepository.save(new Board(dto));
     }
 
     public boolean delete(int bno) {
@@ -45,8 +45,17 @@ public class BoardService {
 
         Board board = boardRepository.findOne(bno);
         // 조회수 상승 처리
-        board.setViewCount(board.getViewCount() + 1);
+//        board.setViewCount(board.getViewCount() + 1);
+        boardRepository.upViewCount(bno);
 
         return new BoardDetailResponseDTO(board);
+    }
+
+
+
+
+
+    public void modify(BoardWriteRequestDTO boardNo){
+       boardRepository.modify(new Board(boardNo));
     }
 }

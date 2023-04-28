@@ -1,5 +1,6 @@
 package com.spring.mvc.chap05.entity;
 
+import com.spring.mvc.chap05.dto.BoardWriteRequestDTO;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -9,6 +10,16 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Board {
+
+//    create table tbl_board (
+//            board_no int(10) auto_increment primary key,
+//    title VARCHAR(80) not null,
+//            -- --varchar(4000) -> 약 1200자 정도, 논문 그 이상은 clob으로 (용량차지up)
+//    content VARCHAR(2000),
+//    view_count int(10) default 0,
+//    reg_date_time DATETIME default current_timestamp
+//);
+
 
     private int boardNo; // 게시글 번호
     private String title; // 제목
@@ -21,6 +32,12 @@ public class Board {
         this.boardNo = boardNo;
         this.title = title;
         this.content = content;
+        this.regDateTime = LocalDateTime.now();
+    }
+
+    public Board(BoardWriteRequestDTO dto) {
+        this.title = dto.getTitle();
+        this.content = dto.getContent();
         this.regDateTime = LocalDateTime.now();
     }
 
