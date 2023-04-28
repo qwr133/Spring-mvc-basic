@@ -17,7 +17,7 @@ public class ScoreSpringRepository implements ScoreRepository {
     }
 
     @Override
-    public List<Score> findAll(String sort) {
+    public List<Score> findAll(String sort) { //동적쿼리 switch 문 작성 물음표 처리하면 안됨
         return ScoreRepository.super.findAll(sort);
     }
 

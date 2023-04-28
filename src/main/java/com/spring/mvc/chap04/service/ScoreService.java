@@ -6,6 +6,7 @@ package com.spring.mvc.chap04.service;
 import com.spring.mvc.chap04.dto.ScoreListResponseDTO;
 import com.spring.mvc.chap04.dto.ScoreRequestDTO;
 import com.spring.mvc.chap04.entity.Score;
+import com.spring.mvc.chap04.repository.ScoreMapper;
 import com.spring.mvc.chap04.repository.ScoreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -20,10 +21,11 @@ import java.util.stream.Collectors;
 @Service //bean 등록할 때 controller는 controller, repository는 repository, service는 service로 하면됨!
 public class ScoreService {
 
-    private final ScoreRepository scoreRepository;
+//    private final ScoreRepository scoreRepository;
+    private ScoreMapper scoreRepository;
 
     @Autowired
-    public ScoreService(@Qualifier("jdbc") ScoreRepository scoreRepository) {
+    public ScoreService(ScoreMapper scoreRepository) {
         this.scoreRepository = scoreRepository;
     }
 
@@ -44,7 +46,6 @@ public class ScoreService {
                 .map(ScoreListResponseDTO::new)
                 .collect(Collectors.toList());
 
-        //return null;
     }
 
 
