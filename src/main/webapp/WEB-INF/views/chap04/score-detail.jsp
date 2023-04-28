@@ -18,15 +18,15 @@
 <body>
 
     <div class="wrap">
-    <h1>${sName.name}님 성적 정보</h1>
+    <h1>${s.name}님 성적 정보</h1>
 
     <ul class = "subject">
-        <li># 국어 : ${sName.kor} </li>
-        <li># 영어 : ${sName.eng} </li>
-        <li># 수학 : ${sName.math} </li>
-        <li># 총점 : ${sName.total} </li>
-        <li># 평균 : ${sName.average} </li>
-        <li># 학점 : ${sName.grade} </li>
+        <li># 국어 : ${s.kor} </li>
+        <li># 영어 : ${s.eng} </li>
+        <li># 수학 : ${s.math} </li>
+        <li># 총점 : ${s.total} </li>
+        <li># 평균 : ${s.average} </li>
+        <li># 학점 : ${s.grade} </li>
     </ul>
 
     <div class="btn-group">

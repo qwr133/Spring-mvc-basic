@@ -22,18 +22,17 @@
 
 
     <!--    삭제-->
-    <delete id="deleteOne">
-        DELETE FROM  tbl_score
-        WHERE stuNum = ${stuNum}
+    <delete id="deleteByStuNum">
+        DELETE FROM tbl_score
+        WHERE stu_num=#{stuNum}
     </delete>
 
 
 <!--    //성적정보개별조회-->
-    <select id="findBystuNum" resultType="score">
+    <select id="findByStuNum" resultType="score">
         SELECT *
         FROM tbl_score
-        WHERE-stu_num={stuNum}
-
+        WHERE stu_num=#{stuNum}
     </select>
 
 
