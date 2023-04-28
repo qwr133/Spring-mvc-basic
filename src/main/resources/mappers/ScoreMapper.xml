@@ -7,14 +7,23 @@
 
 
 <!--    findall-->
-    <select id="findAll"  resultType="score">
+    <select id="findAll" resultType="score">
         SELECT
         *
         FROM tbl_score
+        <if test="sort == 'num'">
+            ORDER BY stu_num
+        </if>
+        <if test="sort == 'name'">
+            ORDER BY name
+        </if>
+        <if test="sort == 'avg'">
+            ORDER BY average DESC
+        </if>
     </select>
 
 
-<!--    성적정보등록-->
+    <!--    성적정보등록-->
     <insert id="save">
         INSERT INTO  tbl_score (name, kor, eng, math, total, average, grade)
         Values (#{name}, #{kor}, #{eng}, #{math}, #{total}, #{average}, #{grade})
