@@ -25,7 +25,7 @@ public class BoardController {
 
     //목록조회
     @GetMapping("/list")
-    public String list(Page page, Model model) {
+    public String list(Page page, Model model) { //클라이언트한테 page정보 받아오기
         log.info("/board/list : GET");
         log.info("page : {}", page);
         List<BoardListResponseDTO> responseDTOS

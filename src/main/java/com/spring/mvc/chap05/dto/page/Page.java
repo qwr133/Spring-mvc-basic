@@ -4,7 +4,11 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-@Getter @ToString @Setter
+@Getter
+@ToString
+@Setter
+//requestDTO 같은 클래스 작성
+//DTO 원리 - 기본생성자(like 파라미터) 만들고 (line17) -> setter 만들기
 public class Page {
 
     private int pageNo; //클라이언트가 보낸 페이지 번호 - 1

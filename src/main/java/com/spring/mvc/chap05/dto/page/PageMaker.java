@@ -5,20 +5,22 @@ import lombok.ToString;
 
 //페이징 알고리즘을 처리하는 클래스
 
-@Getter @ToString
+@Getter //jsp, xml에서  ${} , #{} 필요하기때문에
+@ToString
 public class PageMaker {
 
     // 한번에 그려낼 페이지 수
-    // 1 ~ 5, 6 ~ 10
+    // 1 ~ 5, 6 ~ 10 ○
     // 1 ~ 10, 11 ~ 20
     private static final int PAGE_COUNT = 5;
-
+//내부데이터
     // 화면 렌더링시 페이지의 시작값과 끝값
     private int begin, end, finalPage;
 
     // 이전, 다음 버튼 활성화 여부
     private boolean prev, next;
 
+    //외부데이터 - 생성자 필요
     // 현재 요청 페이지 정보
     private Page page;
 
@@ -29,7 +31,7 @@ public class PageMaker {
     public PageMaker(Page page, int totalCount) {
         this.page = page; //브라우저가 알려주는것
         this.totalCount = totalCount; //db가 알려주는것
-        makePageInfo();
+        makePageInfo(); //내부데이터
     }
 
     // 페이지 계산 알고리즘
@@ -38,12 +40,12 @@ public class PageMaker {
         // 1. end값 계산
         // 올림처리 (현재 위치한 페이지번호 / 한 화면에 배치할 페이지수 ) *  한 화면에 배치할 페이지 수
         this.end = (int) Math.ceil(page.getPageNo() / (double)PAGE_COUNT) * PAGE_COUNT;
+                //         올림처리      int, double 형 맞추기
 
         // 2. begin값 계산
         this.begin = this.end - PAGE_COUNT + 1;
 
         /*
-
         - 총 게시물수가 237개고, 한 화면당 10개의 게시물을 배치하고 있다면
           페이지 구간은
 
@@ -55,8 +57,9 @@ public class PageMaker {
 
         - 마지막 구간 끝페이지 보정 공식:
           올림처리(총 게시물 수 / 한 페이지당 배치할 게시물 수)
-
+                    300 / 6 =50.n => 올림처리 51
          */
+        //int , double casting 필요
         this.finalPage = (int) Math.ceil((double)totalCount / page.getAmount());
 
         // 마지막 페이지 구간에서만 엔드보정이 일어나야 함

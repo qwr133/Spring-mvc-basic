@@ -12,6 +12,8 @@ public interface BoardMapper {
 
     // 게시물 목록 조회 -- 변수 작성 후 게시판의 목록을 배열로 받는다
 //    List<Board> findAll();
+
+    //BoardMapper.xml 쿼리문에 page index, amount 작성했기 때문에 파라미터 가져와야함
     List<Board> findAll(Page page);
 
     // 게시물 상세 조회 -- 게시판의 글번호를 받아서 게시물을 준다

@@ -24,7 +24,8 @@ public class BoardService {
 
     // 중간처리 기능 자유롭게 사용
     // 목록 중간처리
-    public List<BoardListResponseDTO> getList(Page page) {
+    public List<BoardListResponseDTO> getList(Page page) { //클라이언트한테 받아야하기 때문에 page 파라미터삽입
+                                            //군데 서비스가 컨트롤러에게 의존하기때문에 controller에서도 page 삽입필요
     //람다식을 기본 문법 코드로 보고싶을 때 alt+enter - 스트림 API체인을 루프로 바꾸기 엔터
         return boardRepository.findAll(page)
                 .stream()
