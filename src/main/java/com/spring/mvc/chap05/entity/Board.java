@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 @ToString @EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Board {
 
 //    create table tbl_board (

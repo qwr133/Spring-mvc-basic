@@ -17,6 +17,10 @@
     <!-- fontawesome css: https://fontawesome.com -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css">
 
+    <!-- bootstrap css -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+
     <link rel="stylesheet" href="/assets/css/main.css">
     <link rel="stylesheet" href="/assets/css/list.css">
 
@@ -33,8 +37,7 @@
 
         <div class="card-container">
 
-            <!-- boardController 목록조회 부분  var="b"는 DTO(not Board), bList는 ResponseDTO(5개 변수) ==> 타입을 잘 알아둬야함 -->
-            <c:forEach var="b" items="${bList}"> 
+            <c:forEach var="b" items="${bList}">
                 <div class="card-wrapper">
                     <section class="card" data-bno="${b.boardNo}">
                         <div class="card-title-wrapper">
@@ -56,7 +59,6 @@
                         </div>
                     </section>
                     <div class="card-btn-group">
-                        <!-- href태그는 a 태그 속성, 커스텀속성으로 data-href 태그를 만듦 -->
                         <button class="del-btn" data-href="/board/delete?bno=${b.boardNo}">
                             <i class="fas fa-times"></i>
                         </button>
@@ -66,6 +68,43 @@
 
 
         </div>
+        <!-- end card container -->
+
+        <!-- 게시글 목록 하단 영역 -->
+        <div class="bottom-section">
+
+            <!-- 페이지 버튼 영역 -->
+            <nav aria-label="Page navigation example">
+                <ul class="pagination pagination-lg pagination-custom">
+
+                    
+                    <c:if test="${maker.page.pageNo != 1}">
+                        <li class="page-item"><a class="page-link" href="/board/list?pageNo=1">&lt;&lt;</a></li>
+                    </c:if>
+
+                    <c:if test="${maker.prev}">
+                        <li class="page-item"><a class="page-link" href="/board/list?pageNo=${maker.begin - 1}">prev</a></li>
+                    </c:if>
+
+                    <c:forEach var="i" begin="${maker.begin}" end="${maker.end}">
+                        <li data-page-num="${i}" class="page-item">
+                            <a class="page-link" href="/board/list?pageNo=${i}">${i}</a>
+                        </li>
+                    </c:forEach>
+                    
+                    
+                    <c:if test="${maker.next}">
+                        <li class="page-item"><a class="page-link" href="/board/list?pageNo=${maker.end + 1}">next</a></li>
+                    </c:if>
+
+                    <c:if test="${maker.page.pageNo != maker.finalPage}">
+                        <li class="page-item"><a class="page-link" href="/board/list?pageNo=${maker.finalPage}">&gt;&gt;</a></li>
+                    </c:if>
+                </ul>
+            </nav>
+
+        </div>
+    </div>
 
     </div>
 
@@ -178,6 +217,29 @@
         };
 
         
+        //현재 위치한 페이지에 active 스타일 부여하기
+        function appendPageActive() {
+
+            // 현재 내가 보고 있는 페이지 넘버
+            const curPageNum = '${maker.page.pageNo}';
+            console.log("현재페이지: ", curPageNum);
+
+            // 페이지 li태그들을 전부 확인해서 
+            // 현재 위치한 페이지 넘버와 텍스트컨텐츠가 일치하는
+            // li를 찾아서 class active 부여
+            const $ul = document.querySelector('.pagination');
+
+            for (let $li of [...$ul.children]) {
+                if (curPageNum === $li.dataset.pageNum) {
+                    $li.classList.add('active');
+                    break;
+                }
+            }
+
+        }
+
+        appendPageActive();
+
 
     </script>
 

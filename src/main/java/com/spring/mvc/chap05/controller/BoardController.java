@@ -2,8 +2,11 @@ package com.spring.mvc.chap05.controller;
 
 import com.spring.mvc.chap05.dto.BoardListResponseDTO;
 import com.spring.mvc.chap05.dto.BoardWriteRequestDTO;
+import com.spring.mvc.chap05.dto.page.Page;
+import com.spring.mvc.chap05.dto.page.PageMaker;
 import com.spring.mvc.chap05.service.BoardService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,17 +18,26 @@ import java.util.List;
 @Controller //디스패처 서블릿 주입
 @RequiredArgsConstructor //의존성 주입
 @RequestMapping("/board")
+@Slf4j
 public class BoardController {
 
     private final BoardService boardService;
 
     //목록조회
     @GetMapping("/list")
-    public String list(Model model) {
-        System.out.println("/board/list : GET");
+    public String list(Page page, Model model) {
+        log.info("/board/list : GET");
+        log.info("page : {}", page);
         List<BoardListResponseDTO> responseDTOS
-                = boardService.getList();
+                = boardService.getList(page);
+
+        //페이징 알고리즘 작동
+        PageMaker maker = new PageMaker(page, boardService.getCount());
+        //301에 대한건 db에 관련된 정보이니 서비스한테 요청해야함
+
         model.addAttribute("bList", responseDTOS);
+        //jsp에게 주려면 모델에 담아야함
+        model.addAttribute("maker", maker);
         return "chap05/list";
     }
 
