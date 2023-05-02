@@ -4,6 +4,7 @@ import com.spring.mvc.chap05.dto.BoardListResponseDTO;
 import com.spring.mvc.chap05.dto.BoardWriteRequestDTO;
 import com.spring.mvc.chap05.dto.page.Page;
 import com.spring.mvc.chap05.dto.page.PageMaker;
+import com.spring.mvc.chap05.dto.page.Search;
 import com.spring.mvc.chap05.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,19 +26,21 @@ public class BoardController {
 
     //목록조회
     @GetMapping("/list")
-    public String list(Page page, Model model) { //클라이언트한테 page정보 받아오기
+    public String list(Search page, Model model) { //클라이언트한테 page정보 받아오기
         log.info("/board/list : GET");
         log.info("page : {}", page);
         List<BoardListResponseDTO> responseDTOS
                 = boardService.getList(page);
 
         //페이징 알고리즘 작동
-        PageMaker maker = new PageMaker(page, boardService.getCount());
+        PageMaker maker = new PageMaker(page, boardService.getCount(page));
         //301에 대한건 db에 관련된 정보이니 서비스한테 요청해야함
 
         model.addAttribute("bList", responseDTOS);
         //jsp에게 주려면 모델에 담아야함
         model.addAttribute("maker", maker);
+        //기존에 검색한 내용 그대로 남아있게하기
+        model.addAttribute("s", page);
         return "chap05/list";
     }
 
@@ -71,9 +74,10 @@ public class BoardController {
 
     //게시물 등록 - 게시물 정보 통채로 필요함
     @GetMapping("/detail")
-    public String detail(int bno, Model model) { //글번호 내놔봐, model에 넣기
+    public String detail(int bno, Search search, Model model) { //글번호 내놔봐, model에 넣기
         System.out.println("/board/detail : GET");
         model.addAttribute("b", boardService.getDetail(bno));
+        model.addAttribute("s", search); //@ModelAttribute("s") Search search -- 스프링 파라미터
         return "chap05/detail";
     }
 

@@ -1,6 +1,7 @@
 package com.spring.mvc.chap05.repository;
 
 import com.spring.mvc.chap05.dto.page.Page;
+import com.spring.mvc.chap05.dto.page.Search;
 import com.spring.mvc.chap05.entity.Board;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -14,7 +15,7 @@ public interface BoardMapper {
 //    List<Board> findAll();
 
     //BoardMapper.xml 쿼리문에 page index, amount 작성했기 때문에 파라미터 가져와야함
-    List<Board> findAll(Page page);
+    List<Board> findAll(Search page);
 
     // 게시물 상세 조회 -- 게시판의 글번호를 받아서 게시물을 준다
     Board findOne(int boardNo);
@@ -33,5 +34,5 @@ public interface BoardMapper {
     void modify(Board board);
 
     //총 게시물 수 조회하기
-    int count();
+    int count(Search search);
 }
