@@ -18,6 +18,9 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("api/v1/replies")
 @Slf4j
+
+//restAPI는 api 패키지에 넣고
+//일반 컨트롤러는 controller package에 넣음
 public class ReplyController {
 
     private final ReplyService replyService;
@@ -27,7 +30,7 @@ public class ReplyController {
     @GetMapping("/{boardNo}/page/{pageNo}")
     public ResponseEntity<?> list(
             @PathVariable long boardNo,
-            @PathVariable int pageNo  //이렇게하면 ?표로 받게됨 근데 getMapping이니가 /로 받기 위해서 @PathVariable 추가
+            @PathVariable int pageNo  //이렇게하면 ?표로 받게됨 근데 getMapping이니까 /로 받기 위해서 @PathVariable 추가
     ) {
         log.info("/api/v1/replies/{}/page/{} : GET !!", boardNo, pageNo);
 
