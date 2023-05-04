@@ -47,7 +47,7 @@ class ReplyMapperTest {
 //
 //    }
 
-/*
+
     @Test
     void bulkReplyInsert() {
 
@@ -60,7 +60,7 @@ class ReplyMapperTest {
             replyMapper.save(reply);
         }
     }
-*/
+
 
     @Test
     @DisplayName("댓글을 3번 게시물에 등록하면 3번게시물의 총 댓글 수는 8개여야 한다")

@@ -1,5 +1,6 @@
 package com.spring.mvc.chap05.dto.page;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -7,6 +8,7 @@ import lombok.ToString;
 @Getter
 @ToString
 @Setter
+@AllArgsConstructor
 //requestDTO 같은 클래스 작성
 //DTO 원리 - 기본생성자(like 파라미터) 만들고 (line17) -> setter 만들기
 public class Page {

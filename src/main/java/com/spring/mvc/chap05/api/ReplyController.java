@@ -1,17 +1,21 @@
 package com.spring.mvc.chap05.api;
 
 import com.spring.mvc.chap05.dto.ReplyListResponseDTO;
+import com.spring.mvc.chap05.dto.ReplyModifyRequestDTO;
+import com.spring.mvc.chap05.dto.ReplyPostRequestDTO;
 import com.spring.mvc.chap05.dto.page.Page;
 import com.spring.mvc.chap05.entity.Reply;
 import com.spring.mvc.chap05.service.ReplyService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.ibatis.binding.BindingException;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
+import java.security.Provider;
+import java.sql.SQLException;
 import java.util.List;
 
 @RestController
@@ -43,5 +47,94 @@ public class ReplyController {
 
         return ResponseEntity.ok().body(replyList);
     }
+
+
+    //댓글 등록 요청
+    @PostMapping
+    public ResponseEntity<?> create(
+            //RequestBody: 요청메세지 바디에 JSON으로 보내주세요
+            //클라이언트 개발자! 내가 검증할거야! 그러면 ReplyPostRequestDTO 에 필수값들 검증함
+            @Validated @RequestBody ReplyPostRequestDTO dto
+            , BindingResult result  //검증결과를 가진 객체
+    ) {
+        //입력값 검증에 걸리면 4xx 상태 코드 리턴
+        if (result.hasErrors()) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(result.toString());
+        }
+
+        log.info("/api/v1/repilies/ : POST !!");
+        log.info("param : {}", dto);
+
+        //서비스에 비즈니스 로직 처리 위임
+        try {
+            ReplyListResponseDTO responseDTO = replyService.register(dto);
+            //성공시 클라이언트에게 응답하기
+            return ResponseEntity.ok().body(responseDTO);
+        } catch (Exception e) {
+            // 문제발생 상황을 클라이언트에게 전달
+            log.warn("500 STatus code repsponse!! caused by :{}", e.getMessage());
+            return ResponseEntity
+                    .internalServerError()
+                    .body(e.getMessage());
+            //e.getMessage() - ReplyService(line64) 댓글저장실패
+        }
+
+
+    }
+    // 댓글 삭제 요청
+    @DeleteMapping("/{replyNo}")
+    public ResponseEntity<?> remove(
+            //@PathVariable("relyNo") long rno (위 맵핑 파라미터와 변수가 다를시)
+            @PathVariable(required = false) Long replyNo
+    ) {
+        if (replyNo == null) {
+            return ResponseEntity
+                    .badRequest()
+                    .body("댓글 번호를 보내주세요!");
+        }
+
+        log.info("/api/v1/replies/{} DELETE!", replyNo);
+
+        try {
+            ReplyListResponseDTO responseDTO
+                    = replyService.delete(replyNo);
+            return ResponseEntity
+                    .ok()
+                    .body(responseDTO);
+        } catch (Exception e) {
+            return ResponseEntity
+                    .internalServerError()
+                    .body(e.getMessage());
+        }
+
+    }
+
+    //댓글 수정 요청
+    @RequestMapping(method = {RequestMethod.PUT, RequestMethod.PATCH}) //put,patch 둘다 받음
+    //postman put,patch에 replies 주소까지 입력 후 수정 후 db 확인
+    //@PutMapping("/{replyNo}")
+    public ResponseEntity<?> modify(
+            @Validated @RequestBody ReplyModifyRequestDTO dto
+            , BindingResult result
+    ) {
+
+        if (result.hasErrors()) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(result.toString());
+        }
+
+        log.info("/api/v1/replies PUT!");
+        try {
+            ReplyListResponseDTO responseDTO = replyService.modify(dto);
+            return ResponseEntity.ok().body(responseDTO);
+        } catch (Exception e) {
+            log.warn("500 status code! caused by: {}", e.getMessage());
+            return ResponseEntity.internalServerError().body(e.getMessage());
+        }
+    }
+
 
 }
