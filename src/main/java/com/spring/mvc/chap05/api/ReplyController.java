@@ -20,8 +20,10 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("api/v1/replies")
+@RequestMapping("/api/v1/replies")
 @Slf4j
+//클라이언트의 접근을 어떤 app에서만 허용할 것인가 { } 입력시 여러 url 작성가능
+@CrossOrigin(origins = {"http://127.0.0.1:5500"})
 
 //restAPI는 api 패키지에 넣고
 //일반 컨트롤러는 controller package에 넣음
