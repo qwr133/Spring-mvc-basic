@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,10 +10,8 @@
     <title>게시판 글쓰기</title>
 
     <%@ include file="../include/static-head.jsp" %>
-    
+
     <style>
-        
-        
         .form-container {
             width: 500px;
             margin: auto;
@@ -22,6 +21,7 @@
             border-radius: 4px;
             font-size: 18px;
         }
+
         .form-container h1 {
             font-size: 40px;
             font-weight: 700;
@@ -30,18 +30,21 @@
             margin-bottom: 20px;
             color: #ffffff;
         }
+
         .form-container h2 {
             font-size: 30px;
             color: #222;
             text-align: center;
             margin-bottom: 20px;
         }
+
         label {
             display: block;
             margin-bottom: 5px;
             font-size: 20px;
         }
-        #title{
+
+        #title {
             font-size: 18px;
             width: 100%;
             padding: 8px;
@@ -51,6 +54,7 @@
             margin-bottom: 10px;
             background-color: rgba(255, 255, 255, 0.8);
         }
+
         #content {
             height: 400px;
             font-size: 18px;
@@ -67,11 +71,13 @@
             resize: none;
             height: 200px;
         }
+
         .buttons {
             display: flex;
             justify-content: flex-end;
             margin-top: 20px;
         }
+
         button {
             font-size: 20px;
             padding: 10px 20px;
@@ -84,12 +90,15 @@
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             transition: background-color 0.3s;
         }
+
         button.list-btn {
             background: #e61e8c;
         }
+
         button:hover {
             background-color: #3d8b40;
         }
+
         button.list-btn:hover {
             background: #e61e8c93;
         }
@@ -107,9 +116,9 @@
             background: #888 !important;
             color: #fff !important;
         }
-
     </style>
 </head>
+
 <body>
 
     <%@ include file="../include/header.jsp" %>
@@ -122,7 +131,8 @@
         <label for="content">내용</label>
         <div id="content">${b.content}</div>
         <div class="buttons">
-            <button class="list-btn" type="button" onclick="window.location.href='/board/list?pageNo=${s.pageNo}&type=${s.type}&keyword=${s.keyword}'">목록</button>
+            <button class="list-btn" type="button"
+                onclick="window.location.href='/board/list?pageNo=${s.pageNo}&type=${s.type}&keyword=${s.keyword}'">목록</button>
         </div>
 
         <!-- 댓글 영역 -->
@@ -143,11 +153,9 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="newReplyWriter" hidden>댓글 작성자</label>
-                                    <input id="newReplyWriter" name="replyWriter" type="text"
-                                         class="form-control" placeholder="작성자 이름"
-                                         style="margin-bottom: 6px;">
-                                    <button id="replyAddBtn" type="button"
-                                        class="btn btn-dark form-control">등록</button>
+                                    <input id="newReplyWriter" name="replyWriter" type="text" class="form-control"
+                                        placeholder="작성자 이름" style="margin-bottom: 6px;">
+                                    <button id="replyAddBtn" type="button" class="btn btn-dark form-control">등록</button>
                                 </div>
                             </div>
                         </div>
@@ -212,7 +220,7 @@
         </div>
 
         <!-- end replyModifyModal -->
-        
+
     </div>
 
 
@@ -226,7 +234,12 @@
 
         // 페이지 렌더링 함수
         function renderPage({
-            begin, end, prev, next, page, finalPage
+            begin,
+            end,
+            prev,
+            next,
+            page,
+            finalPage
         }) {
 
             let tag = "";
@@ -282,7 +295,9 @@
 
         // 댓글 목록 렌더링 함수
         function renderReplyList({
-            count, pageInfo, replies
+            count,
+            pageInfo,
+            replies
         }) {
 
             // 총 댓글 수 렌더링
@@ -298,7 +313,12 @@
             } else {
                 for (let rep of replies) {
 
-                    const {rno, writer, text, regDate} = rep;
+                    const {
+                        rno,
+                        writer,
+                        text,
+                        regDate
+                    } = rep;
 
                     tag += "<div id='replyContent' class='card-body' data-replyId='" + rno + "'>" +
                         "    <div class='row user-block'>" +
@@ -313,9 +333,9 @@
                         "       <div et-md-2 col-md-4 text-right'>";
 
                     // if (currentAccount === rep.account || auth === 'ADMIN') {
-                        tag +=
-                            "         <a id='replyModBtn' class='btn btn-sm btn-outline-dark' data-bs-toggle='modal' data-bs-target='#replyModifyModal'>수정</a>&nbsp;" +
-                            "         <a id='replyDelBtn' class='btn btn-sm btn-outline-dark' href='#'>삭제</a>";
+                    tag +=
+                        "         <a id='replyModBtn' class='btn btn-sm btn-outline-dark' data-bs-toggle='modal' data-bs-target='#replyModifyModal'>수정</a>&nbsp;" +
+                        "         <a id='replyDelBtn' class='btn btn-sm btn-outline-dark' href='#'>삭제</a>";
                     // }
                     tag += "       </div>" +
                         "    </div>" +
@@ -334,7 +354,7 @@
 
 
         // 댓글 목록 불러오기 함수 
-        function getReplyList(page=1) {
+        function getReplyList(page = 1) {
 
 
             // fetch(`${URL}/${bno}/page/${page}`) --java문법과 js 문법 {} 이 충돌이 날 수 있기 때문에 하단의 코드처럼 작성 필요
@@ -365,13 +385,10 @@
                 if ($rt.value.trim() === '') {
                     alert('댓글 내용은 필수입니다!');
                     return;
-                }
-
-                else if ($rw.value.trim() === '') {
+                } else if ($rw.value.trim() === '') {
                     alert('댓글 작성자 이름은 필수입니다!');
                     return;
-                }
-                else if ($rw.value.trim().length < 2 || $rw.value.trim().length > 8) {
+                } else if ($rw.value.trim().length < 2 || $rw.value.trim().length > 8) {
                     alert('댓글 작성자 이름은 2~8자 사이로 작성하세요!');
                     return;
                 }
@@ -412,8 +429,101 @@
             };
         }
 
+        //###5/9 
+        //댓글 삭제+수정모달 이벤트 처리 함수 (수정 모달에서 수정 클릭시는 확인 이벤트 따로 작성)
+        function replyRemoveClickEvent() {
+            const $replyData = document.getElementById('replyData');
+
+            $replyData.onclick = e => {
+                e.preventDefault();
+
+                //삭제할 댓글 pk값 읽기 (돔트리 알고리즘)
+                const rno = e.target.closest('#replyContent').dataset.replyid;
+                console.log(rno);
+
+                if (e.target.matches('#replyDelBtn')) {
+                    //console.log('삭제버튼 클릭!!');
+
+                    if (!confirm('정말 삭제합니까?')) return;
+                    //컨펌하지 않으면 나가! =>취소 누르면 나가
+
+
+
+                    //서버에 삭제 비동기 요청
+                    fetch(URL + '/' + rno, {
+                        method: 'DELETE',
+                        //실어 받을 만한 데이터가 없기때문에 hearder 생략가능 = 기본헤더
+                    }).then(res => {
+                        if (res.status == 200) {
+                            // console.log('댓글이 정상 삭제됨!');
+                            alert('댓글이 정상 삭제됨!')
+                            return res.json();
+                        } else {
+                            // console.log('댓글 삭제 실패');
+                            alert('댓글 삭제 실패');
+                        }
+                    }).then(responseResult => {
+                        renderReplyList(responseResult);
+                    });
+                } else if (e.target.matches('#replyModBtn')) {
+                    console.log('수정 화면 진입!');
+
+                    //클릭한 수정 버튼 근처에 있는 텍스트 읽기
+                    const replyText = e.target.parentElement.previousElementSibling.textContent;
+                    // console.log(replyText);
+
+                    //모달에 모달바디에 textarea에 읽은 텍스트를 삽입
+                    document.getElementById('modReplyText').value = replyText;
+
+                    // 다음 수정완료 처리를 위해 미리 수정창을 띄울 때 댓글번호를 모달에 붙여놓자 
+                    // 수정 모달이 실행된 상태에서 수정 클릭 이벤트 누를 때 rno 부분을 찾기가 어려움 그래서 미리 붙여놓는 작업진행
+                    const $modal = document.querySelector('.modal');
+                    $modal.dataset.rno = rno;
+
+                }
+            };
+        }
+
+        //### 5/9
+        //서버에 수정 비동기 요청 처리 함수
+        // 서버에 수정 비동기 요청 처리 함수
+        function replyModifyClickEvent() {
+
+            const $modBtn = document.getElementById('replyModBtn');
+
+            $modBtn.onclick = e => {
+
+                const payload = {
+                    rno: +document.querySelector('.modal').dataset.rno,
+                    bno: +bno, //line 222쯤
+                    text: document.getElementById('modReplyText').value
+                };
+
+                // console.log(payload);
+
+                fetch(URL, { //url - ReplyModifyRequestDTO
+                    method: 'PUT',
+                    headers: {
+                        'content-type': 'application/json'
+                    },
+                    body: JSON.stringify(payload)
+                }).then(res => {
+                    if (res.status === 200) {
+                        alert('댓글이 정상 수정되었습니다!');
+                     //모달창 닫기  -- 비동기여서 수동으로 이벤트를 걸어줘야한다
+                        document.getElementById('modal-close').click();
+                        return res.json();
+                    } else {
+                        alert('댓글 수정에 실패했습니다.');
+                    }
+                }).then(result => {
+                    renderReplyList(result);
+                });
+            };
+        }
+
         //========= 메인 실행부 =========//
-        (function() {
+        (function () {
 
             // 첫 댓글 페이지 불러오기
             getReplyList();
@@ -424,9 +534,15 @@
             // 댓글 등록 이벤트 등록
             makeReplyRegisterClickEvent();
 
-        })();
+            //삭제 이벤트 등록
+            replyRemoveClickEvent();
 
+            //수정 이벤트 등록 - 수정 클릭시
+            replyModifyClickEvent();
+
+        })();
     </script>
 
 </body>
+
 </html>
