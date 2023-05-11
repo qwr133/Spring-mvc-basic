@@ -1,22 +1,16 @@
 package com.spring.mvc.chap05.api;
 
-import com.spring.mvc.chap05.dto.ReplyListResponseDTO;
-import com.spring.mvc.chap05.dto.ReplyModifyRequestDTO;
-import com.spring.mvc.chap05.dto.ReplyPostRequestDTO;
+import com.spring.mvc.chap05.dto.response.ReplyListResponseDTO;
+import com.spring.mvc.chap05.dto.request.ReplyModifyRequestDTO;
+import com.spring.mvc.chap05.dto.request.ReplyPostRequestDTO;
 import com.spring.mvc.chap05.dto.page.Page;
-import com.spring.mvc.chap05.entity.Reply;
 import com.spring.mvc.chap05.service.ReplyService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.ibatis.binding.BindingException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import java.security.Provider;
-import java.sql.SQLException;
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor

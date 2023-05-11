@@ -1,8 +1,7 @@
 package com.spring.mvc.chap05.controller;
 
-import com.spring.mvc.chap05.dto.BoardListResponseDTO;
-import com.spring.mvc.chap05.dto.BoardWriteRequestDTO;
-import com.spring.mvc.chap05.dto.page.Page;
+import com.spring.mvc.chap05.dto.response.BoardListResponseDTO;
+import com.spring.mvc.chap05.dto.request.BoardWriteRequestDTO;
 import com.spring.mvc.chap05.dto.page.PageMaker;
 import com.spring.mvc.chap05.dto.page.Search;
 import com.spring.mvc.chap05.service.BoardService;
@@ -14,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller //디스패처 서블릿 주입
@@ -26,7 +26,27 @@ public class BoardController {
 
     //목록조회
     @GetMapping("/list")
-    public String list(Search page, Model model) { //클라이언트한테 page정보 받아오기
+    public String list(Search page, Model model,
+                       HttpServletRequest request) { //클라이언트한테 page정보 받아오기
+
+        boolean flag = false;
+
+        //세션을 확인
+        Object login = request.getSession().getAttribute("login");
+
+        if(login!=null) flag=true;
+
+        // 쿠키를 확인
+//        Cookie[] cookies = request.getCookies();
+//        for (Cookie c : cookies) {
+//            if (c.getName().equals("login")) {
+//                flag = true;
+//                break;
+//            }
+//        }
+        if(!flag) return "redirect:/members/sign-in";
+
+
         log.info("/board/list : GET");
         log.info("page : {}", page);
         List<BoardListResponseDTO> responseDTOS
