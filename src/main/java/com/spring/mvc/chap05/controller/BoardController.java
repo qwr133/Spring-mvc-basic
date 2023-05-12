@@ -1,19 +1,24 @@
 package com.spring.mvc.chap05.controller;
 
+import com.spring.mvc.chap05.dto.response.BoardDetailResponseDTO;
 import com.spring.mvc.chap05.dto.response.BoardListResponseDTO;
 import com.spring.mvc.chap05.dto.request.BoardWriteRequestDTO;
 import com.spring.mvc.chap05.dto.page.PageMaker;
 import com.spring.mvc.chap05.dto.page.Search;
 import com.spring.mvc.chap05.service.BoardService;
+import com.spring.mvc.util.LoginUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.List;
 
 @Controller //디스패처 서블릿 주입
@@ -27,14 +32,15 @@ public class BoardController {
     //목록조회
     @GetMapping("/list")
     public String list(Search page, Model model,
-                       HttpServletRequest request) { //클라이언트한테 page정보 받아오기
+                       HttpServletRequest request
+    ) throws IOException {//클라이언트한테 page정보 받아오기
 
-        boolean flag = false;
+//        boolean flag = false;
 
         //세션을 확인
-        Object login = request.getSession().getAttribute("login");
-
-        if(login!=null) flag=true;
+//        Object login = request.getSession().getAttribute("login");
+//
+//        if(login!=null) flag=true;
 
         // 쿠키를 확인
 //        Cookie[] cookies = request.getCookies();
@@ -44,7 +50,7 @@ public class BoardController {
 //                break;
 //            }
 //        }
-        if(!flag) return "redirect:/members/sign-in";
+//        if(!flag) return "redirect:/members/sign-in";
 
 
         log.info("/board/list : GET");
@@ -52,7 +58,7 @@ public class BoardController {
         List<BoardListResponseDTO> responseDTOS
                 = boardService.getList(page);
 
-        //페이징 알고리즘 작동
+        // 페이징 알고리즘 작동
         PageMaker maker = new PageMaker(page, boardService.getCount(page));
         //301에 대한건 db에 관련된 정보이니 서비스한테 요청해야함
 
@@ -66,19 +72,24 @@ public class BoardController {
 
     // 글쓰기 화면 조회 요청
     @GetMapping("/write")
-    public String write() {
+    public String write(HttpSession session) {
+//        if (!LoginUtil.isLogin(session)) {
+//            return "redirect:/members/sign-in";
+//        }
+
+
         System.out.println("/board/write : GET");
         return "chap05/write";
     }
 
     // 글 등록 요청 처리
     @PostMapping("/write")
-    public String write(BoardWriteRequestDTO dto) {
+    public String write(BoardWriteRequestDTO dto, HttpSession session) {
+
         System.out.println("/board/write : POST");
-        boardService.register(dto);
+        boardService.register(dto, session);
         return "redirect:/board/list";
     }
-
 
 
     // 글 삭제 요청 처리
@@ -90,28 +101,15 @@ public class BoardController {
     }
 
 
-
-
     //게시물 등록 - 게시물 정보 통채로 필요함
     @GetMapping("/detail")
-    public String detail(int bno, Search search, Model model) { //글번호 내놔봐, model에 넣기
+    public String detail(int bno, @ModelAttribute("s") Search search, Model model) { //글번호내놔봐, model에 넣기
         System.out.println("/board/detail : GET");
-        model.addAttribute("b", boardService.getDetail(bno));
-        model.addAttribute("s", search); //@ModelAttribute("s") Search search -- 스프링 파라미터
+        BoardDetailResponseDTO detail = boardService.getDetail(bno);
+        model.addAttribute("b", detail);
+//        model.addAttribute("s", search);
+
         return "chap05/detail";
-    }
-
-
-
-
-
-
-    //게시글 수정
-    @PostMapping("/modify")
-    public String modify(BoardWriteRequestDTO dto){
-        System.out.println("/board/modify : POST");
-        boardService.modify(dto);
-        return "redirect:/board/list";
     }
 
 }

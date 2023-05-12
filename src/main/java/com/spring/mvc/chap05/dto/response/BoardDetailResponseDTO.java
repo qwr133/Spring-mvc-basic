@@ -15,6 +15,7 @@ public class BoardDetailResponseDTO {
     private final String title;
     private final String content;
     private final String date;
+    private final String writer;
 
     public BoardDetailResponseDTO(Board board) {
         this.boardNo = board.getBoardNo();
@@ -22,5 +23,6 @@ public class BoardDetailResponseDTO {
         this.content = board.getContent();
         this.date = BoardListResponseDTO.makePrettierDateString(board.getRegDateTime()); // LISTDTO에서 private 대신 public 으로 하여 꺼내옴
                                                                         //현업에서는 클래스 하나 더 만드는것이 맞음
+        this.writer=board.getWriter();
     }
 }

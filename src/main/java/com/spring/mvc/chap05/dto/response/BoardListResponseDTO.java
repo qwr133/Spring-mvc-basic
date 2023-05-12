@@ -20,6 +20,7 @@ public class BoardListResponseDTO {
     private final String shortContent; // 30자 이상 줄임
     private final String date; // 날짜패턴 yyyy-MM-dd HH:mm
     private final int viewCount;
+    private final String account;
 
     public BoardListResponseDTO(Board board) {
         this.boardNo = board.getBoardNo(); //원본 글번호 그대로 세팅
@@ -27,6 +28,7 @@ public class BoardListResponseDTO {
         this.shortContent = makeShortContent(board.getContent()); //이하 동일
         this.date = makePrettierDateString(board.getRegDateTime()); //하단에 함수 작성
         this.viewCount = board.getViewCount();
+        this.account = board.getAccount();
     }
 
     static String makePrettierDateString(LocalDateTime regDateTime) {
