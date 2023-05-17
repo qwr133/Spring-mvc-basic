@@ -30,6 +30,7 @@ private String replyText;
 private String replyWriter;
 private LocalDateTime replyDate;
 private long boardNo;
+private String profile;
 
 
 }
